@@ -10,6 +10,8 @@
     End Sub
 
     Private Sub btnStop_Click(sender As Object, e As EventArgs) Handles btnStop.Click
+        TimerPlay.Stop()
+        TrackBarPlay.Value = "0"
         AxWindowsMediaPlayer.Ctlcontrols.stop()
     End Sub
 
@@ -22,7 +24,7 @@
     End Sub
 
     Private Sub OpenFileDialog1_FileOk(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles OpenFileDialog1.FileOk
-        AxWindowsMediaPlayer.URL = OpenFileDialog1.FileName
+        'AxWindowsMediaPlayer.URL = OpenFileDialog1.FileName
     End Sub
 
     Private Sub tbrVolume_Scroll(sender As Object, e As EventArgs) Handles tbrVolume.Scroll
@@ -56,11 +58,8 @@
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
+        TimerPlay.Start()
         AxWindowsMediaPlayer.URL = ListBox1.SelectedItem
-    End Sub
-
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As EventArgs) Handles btnPrev.Click
@@ -95,5 +94,18 @@
 
     Private Sub tsmUserManual_Click(sender As Object, e As EventArgs) Handles tsmManual.Click
         Manual.Show()
+    End Sub
+
+    Private Sub TrackBarPlay_Scroll(sender As Object, e As EventArgs) Handles TrackBarPlay.Scroll
+        AxWindowsMediaPlayer.Ctlcontrols.currentPosition = TrackBarPlay.Value
+    End Sub
+
+    Private Sub TrackBarPlay_MouseDown(sender As Object, e As MouseEventArgs) Handles TrackBarPlay.MouseDown
+        AxWindowsMediaPlayer.Ctlcontrols.currentPosition = TrackBarPlay.Value
+    End Sub
+
+    Private Sub TimerPlay_Tick(sender As Object, e As EventArgs) Handles TimerPlay.Tick
+        TrackBarPlay.Maximum = AxWindowsMediaPlayer.currentMedia.duration
+        TrackBarPlay.Value = AxWindowsMediaPlayer.Ctlcontrols.currentPosition
     End Sub
 End Class

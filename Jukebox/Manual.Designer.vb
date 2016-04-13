@@ -31,6 +31,7 @@ Partial Class Manual
         Me.rtxtManual.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.rtxtManual.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.rtxtManual.Location = New System.Drawing.Point(1, 1)
         Me.rtxtManual.Name = "rtxtManual"
         Me.rtxtManual.ReadOnly = True

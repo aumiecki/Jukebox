@@ -25,13 +25,13 @@ Partial Class Form1
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.GroupBoxLeft = New System.Windows.Forms.GroupBox()
+        Me.lblPlaylist = New System.Windows.Forms.Label()
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.btnExport = New System.Windows.Forms.Button()
         Me.btnNext = New System.Windows.Forms.Button()
         Me.btnPrev = New System.Windows.Forms.Button()
-        Me.lblPlaylist = New System.Windows.Forms.Label()
         Me.btnDelete = New System.Windows.Forms.Button()
         Me.btnAdd = New System.Windows.Forms.Button()
-        Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.GroupBoxTop = New System.Windows.Forms.GroupBox()
         Me.AxWindowsMediaPlayer = New AxWMPLib.AxWindowsMediaPlayer()
         Me.GroupBoxBottom = New System.Windows.Forms.GroupBox()
@@ -45,8 +45,9 @@ Partial Class Form1
         Me.tsmOpen = New System.Windows.Forms.ToolStripMenuItem()
         Me.tsmManual = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerPlay = New System.Windows.Forms.Timer(Me.components)
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TrackBarPlay = New System.Windows.Forms.TrackBar()
         Me.GroupBoxLeft.SuspendLayout()
         Me.GroupBoxTop.SuspendLayout()
         CType(Me.AxWindowsMediaPlayer, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -54,6 +55,7 @@ Partial Class Form1
         CType(Me.tbrVolume, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        CType(Me.TrackBarPlay, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBoxLeft
@@ -69,6 +71,26 @@ Partial Class Form1
         Me.GroupBoxLeft.TabIndex = 0
         Me.GroupBoxLeft.TabStop = False
         '
+        'lblPlaylist
+        '
+        Me.lblPlaylist.AutoSize = True
+        Me.lblPlaylist.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblPlaylist.Location = New System.Drawing.Point(177, 10)
+        Me.lblPlaylist.Name = "lblPlaylist"
+        Me.lblPlaylist.Size = New System.Drawing.Size(65, 20)
+        Me.lblPlaylist.TabIndex = 3
+        Me.lblPlaylist.Text = "Playlist"
+        '
+        'ListBox1
+        '
+        Me.ListBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ListBox1.FormattingEnabled = True
+        Me.ListBox1.Location = New System.Drawing.Point(7, 36)
+        Me.ListBox1.Name = "ListBox1"
+        Me.ListBox1.Size = New System.Drawing.Size(383, 342)
+        Me.ListBox1.TabIndex = 0
+        '
         'btnExport
         '
         Me.btnExport.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -78,7 +100,7 @@ Partial Class Form1
         Me.btnExport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray
         Me.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnExport.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnExport.Location = New System.Drawing.Point(258, 45)
+        Me.btnExport.Location = New System.Drawing.Point(273, 45)
         Me.btnExport.Name = "btnExport"
         Me.btnExport.Size = New System.Drawing.Size(110, 42)
         Me.btnExport.TabIndex = 0
@@ -96,7 +118,7 @@ Partial Class Form1
         Me.btnNext.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnNext.Location = New System.Drawing.Point(213, 16)
         Me.btnNext.Name = "btnNext"
-        Me.btnNext.Size = New System.Drawing.Size(108, 23)
+        Me.btnNext.Size = New System.Drawing.Size(123, 23)
         Me.btnNext.TabIndex = 5
         Me.btnNext.Text = "Next"
         Me.btnNext.UseVisualStyleBackColor = True
@@ -112,20 +134,10 @@ Partial Class Form1
         Me.btnPrev.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnPrev.Location = New System.Drawing.Point(66, 16)
         Me.btnPrev.Name = "btnPrev"
-        Me.btnPrev.Size = New System.Drawing.Size(108, 23)
+        Me.btnPrev.Size = New System.Drawing.Size(123, 23)
         Me.btnPrev.TabIndex = 4
         Me.btnPrev.Text = "Previous"
         Me.btnPrev.UseVisualStyleBackColor = True
-        '
-        'lblPlaylist
-        '
-        Me.lblPlaylist.AutoSize = True
-        Me.lblPlaylist.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPlaylist.Location = New System.Drawing.Point(177, 10)
-        Me.lblPlaylist.Name = "lblPlaylist"
-        Me.lblPlaylist.Size = New System.Drawing.Size(65, 20)
-        Me.lblPlaylist.TabIndex = 3
-        Me.lblPlaylist.Text = "Playlist"
         '
         'btnDelete
         '
@@ -136,7 +148,7 @@ Partial Class Form1
         Me.btnDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray
         Me.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnDelete.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnDelete.Location = New System.Drawing.Point(121, 45)
+        Me.btnDelete.Location = New System.Drawing.Point(136, 45)
         Me.btnDelete.Name = "btnDelete"
         Me.btnDelete.Size = New System.Drawing.Size(131, 42)
         Me.btnDelete.TabIndex = 2
@@ -154,18 +166,10 @@ Partial Class Form1
         Me.btnAdd.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAdd.Location = New System.Drawing.Point(15, 45)
         Me.btnAdd.Name = "btnAdd"
-        Me.btnAdd.Size = New System.Drawing.Size(100, 42)
+        Me.btnAdd.Size = New System.Drawing.Size(115, 42)
         Me.btnAdd.TabIndex = 1
         Me.btnAdd.Text = "Add to Playlist"
         Me.btnAdd.UseVisualStyleBackColor = True
-        '
-        'ListBox1
-        '
-        Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.Location = New System.Drawing.Point(7, 36)
-        Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(383, 342)
-        Me.ListBox1.TabIndex = 0
         '
         'GroupBoxTop
         '
@@ -175,7 +179,7 @@ Partial Class Form1
         Me.GroupBoxTop.Controls.Add(Me.AxWindowsMediaPlayer)
         Me.GroupBoxTop.Location = New System.Drawing.Point(421, 28)
         Me.GroupBoxTop.Name = "GroupBoxTop"
-        Me.GroupBoxTop.Size = New System.Drawing.Size(595, 417)
+        Me.GroupBoxTop.Size = New System.Drawing.Size(595, 397)
         Me.GroupBoxTop.TabIndex = 1
         Me.GroupBoxTop.TabStop = False
         '
@@ -188,7 +192,7 @@ Partial Class Form1
         Me.AxWindowsMediaPlayer.Location = New System.Drawing.Point(6, 14)
         Me.AxWindowsMediaPlayer.Name = "AxWindowsMediaPlayer"
         Me.AxWindowsMediaPlayer.OcxState = CType(resources.GetObject("AxWindowsMediaPlayer.OcxState"), System.Windows.Forms.AxHost.State)
-        Me.AxWindowsMediaPlayer.Size = New System.Drawing.Size(583, 397)
+        Me.AxWindowsMediaPlayer.Size = New System.Drawing.Size(583, 377)
         Me.AxWindowsMediaPlayer.TabIndex = 0
         '
         'GroupBoxBottom
@@ -296,7 +300,7 @@ Partial Class Form1
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmOpen, Me.tsmManual})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(219, 25)
+        Me.MenuStrip1.Size = New System.Drawing.Size(127, 25)
         Me.MenuStrip1.TabIndex = 4
         Me.MenuStrip1.Text = "File"
         '
@@ -325,10 +329,6 @@ Partial Class Form1
         Me.OpenFileDialog1.InitialDirectory = "D:\Documents\Source\Repository\Jukebox\Jukebox\WAVfiles"
         Me.OpenFileDialog1.Title = "Choose Media Files"
         '
-        'Timer1
-        '
-        Me.Timer1.Interval = 3000
-        '
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -340,9 +340,20 @@ Partial Class Form1
         Me.GroupBox1.Controls.Add(Me.btnAdd)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 431)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(383, 100)
+        Me.GroupBox1.Size = New System.Drawing.Size(398, 100)
         Me.GroupBox1.TabIndex = 6
         Me.GroupBox1.TabStop = False
+        '
+        'TrackBarPlay
+        '
+        Me.TrackBarPlay.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TrackBarPlay.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.TrackBarPlay.Location = New System.Drawing.Point(421, 431)
+        Me.TrackBarPlay.Name = "TrackBarPlay"
+        Me.TrackBarPlay.Size = New System.Drawing.Size(595, 45)
+        Me.TrackBarPlay.TabIndex = 7
+        Me.TrackBarPlay.TickStyle = System.Windows.Forms.TickStyle.None
         '
         'Form1
         '
@@ -351,11 +362,12 @@ Partial Class Form1
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1054, 546)
-        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.TrackBarPlay)
+        Me.Controls.Add(Me.GroupBoxTop)
         Me.Controls.Add(Me.GroupBoxBottom)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.GroupBoxLeft)
         Me.Controls.Add(Me.MenuStrip1)
-        Me.Controls.Add(Me.GroupBoxTop)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
@@ -371,6 +383,7 @@ Partial Class Form1
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
+        CType(Me.TrackBarPlay, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -389,7 +402,7 @@ Partial Class Form1
     Friend WithEvents btnRewind As Button
     Friend WithEvents tbrVolume As TrackBar
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents Timer1 As Timer
+    Friend WithEvents TimerPlay As Timer
     Friend WithEvents btnDelete As Button
     Friend WithEvents btnAdd As Button
     Friend WithEvents ListBox1 As ListBox
@@ -399,4 +412,5 @@ Partial Class Form1
     Friend WithEvents btnExport As Button
     Friend WithEvents tsmManual As ToolStripMenuItem
     Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents TrackBarPlay As TrackBar
 End Class
