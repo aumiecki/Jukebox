@@ -1,19 +1,16 @@
 ﻿Public Class Form1
 
     Private Sub btnPlay_Click(sender As Object, e As EventArgs) Handles btnPlay.Click
-        Timer1.Start()
         AxWindowsMediaPlayer.URL = ListBox1.SelectedItem
         AxWindowsMediaPlayer.Ctlcontrols.play()
     End Sub
 
     Private Sub btnPause_Click(sender As Object, e As EventArgs) Handles btnPause.Click
-        Timer1.Stop()
         AxWindowsMediaPlayer.Ctlcontrols.pause()
-        Timer1.Start()
     End Sub
 
     Private Sub btnStop_Click(sender As Object, e As EventArgs) Handles btnStop.Click
-        Timer1.Stop()
+        TimerPlay.Stop()
         TrackBarPlay.Value = "0"
         AxWindowsMediaPlayer.Ctlcontrols.stop()
     End Sub
@@ -42,8 +39,6 @@
             For Each song As String In OpenFileDialog1.FileNames
                 ListBox1.Items.Add(song)
             Next
-            'Me.ListBox1.SelectedIndex = Me.ListBox1.SelectedIndex + 1
-            Timer1.Start()
         End If
     End Sub
 
@@ -55,48 +50,33 @@
             For Each song As String In OpenFileDialog1.FileNames
                 ListBox1.Items.Add(song)
             Next
-            'Me.ListBox1.SelectedIndex = Me.ListBox1.SelectedIndex + 1
-            Timer1.Start()
         End If
     End Sub
 
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
-        Try
-            ListBox1.Items.Remove(ListBox1.SelectedItem)
-            ListBox1.SelectedIndex = "0"
-        Catch ex As Exception
-            ListBox1.Items.Remove(ListBox1.SelectedItem)
-            ListBox1.SelectedIndex = "-1"
-        End Try
+        ListBox1.Items.Remove(ListBox1.SelectedItem)
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
-        AxWindowsMediaPlayer.URL = ListBox1.SelectedItem
         TimerPlay.Start()
+        AxWindowsMediaPlayer.URL = ListBox1.SelectedItem
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As EventArgs) Handles btnPrev.Click
         If ListBox1.SelectedIndex < ListBox1.Items.Count + 1 Then
-            Timer1.Stop()
-            AxWindowsMediaPlayer.URL = ""
             ListBox1.SelectedIndex = ListBox1.SelectedIndex - 1
-            AxWindowsMediaPlayer.URL = ListBox1.SelectedItem
-            Timer1.Start()
+            AxWindowsMediaPlayer.Ctlcontrols.play()
         End If
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As EventArgs) Handles btnNext.Click
         If ListBox1.SelectedIndex < ListBox1.Items.Count - 1 Then
-            Timer1.Stop()
-            AxWindowsMediaPlayer.URL = ""
             ListBox1.SelectedIndex = ListBox1.SelectedIndex + 1
-            AxWindowsMediaPlayer.URL = ListBox1.SelectedItem
-            Timer1.Start()
+            AxWindowsMediaPlayer.Ctlcontrols.play()
         End If
     End Sub
 
     Private Sub btnExport_Click(sender As Object, e As EventArgs) Handles btnExport.Click
-        AxWindowsMediaPlayer.settings.volume = "0"
         Dim count As Integer = -1
         Dim writer As New IO.StreamWriter(Application.StartupPath & "\playlist.txt")
         Dim current As Integer = ListBox1.SelectedIndex
@@ -127,31 +107,5 @@
     Private Sub TimerPlay_Tick(sender As Object, e As EventArgs) Handles TimerPlay.Tick
         TrackBarPlay.Maximum = AxWindowsMediaPlayer.currentMedia.duration
         TrackBarPlay.Value = AxWindowsMediaPlayer.Ctlcontrols.currentPosition
-    End Sub
-
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        Try
-            Dim itemNo As Integer
-
-            itemNo = ListBox1.SelectedIndex
-            If Me.AxWindowsMediaPlayer.playState = WMPLib.WMPPlayState.wmppsStopped Then
-                Me.ListBox1.SelectedIndex = itemNo + 1
-                AxWindowsMediaPlayer.URL = ListBox1.SelectedItem
-                Timer1.Start()
-            Else
-                Timer1.Start()
-            End If
-        Catch ex As Exception
-            Timer1.Stop()
-        End Try
-    End Sub
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        OpenFileDialog1.Title = "Select Playlist"
-        OpenFileDialog1.Filter = "Text Files (*.txt)|*.txt"
-        If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-            Report.txtReport.Text = My.Computer.FileSystem.ReadAllText(OpenFileDialog1.FileName)
-        End If
-        Report.Show()
     End Sub
 End Class
