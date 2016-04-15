@@ -38,7 +38,7 @@ Partial Class Manual
         Me.rtxtManual.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical
         Me.rtxtManual.Size = New System.Drawing.Size(536, 657)
         Me.rtxtManual.TabIndex = 0
-        Me.rtxtManual.Text = "Open File - "
+        Me.rtxtManual.Text = ""
         '
         'Manual
         '
