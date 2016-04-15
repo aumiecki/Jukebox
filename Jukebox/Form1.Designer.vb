@@ -48,6 +48,8 @@ Partial Class Form1
         Me.TimerPlay = New System.Windows.Forms.Timer(Me.components)
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.TrackBarPlay = New System.Windows.Forms.TrackBar()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.tsmReport = New System.Windows.Forms.ToolStripMenuItem()
         Me.GroupBoxLeft.SuspendLayout()
         Me.GroupBoxTop.SuspendLayout()
         CType(Me.AxWindowsMediaPlayer, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -97,7 +99,8 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnExport.FlatAppearance.CheckedBackColor = System.Drawing.Color.Green
-        Me.btnExport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray
+        Me.btnExport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Green
+        Me.btnExport.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray
         Me.btnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnExport.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnExport.Location = New System.Drawing.Point(273, 45)
@@ -113,7 +116,8 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnNext.FlatAppearance.CheckedBackColor = System.Drawing.Color.Green
-        Me.btnNext.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray
+        Me.btnNext.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Green
+        Me.btnNext.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray
         Me.btnNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnNext.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnNext.Location = New System.Drawing.Point(213, 16)
@@ -129,7 +133,8 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnPrev.FlatAppearance.CheckedBackColor = System.Drawing.Color.Green
-        Me.btnPrev.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray
+        Me.btnPrev.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Green
+        Me.btnPrev.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray
         Me.btnPrev.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnPrev.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnPrev.Location = New System.Drawing.Point(66, 16)
@@ -145,7 +150,8 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnDelete.FlatAppearance.CheckedBackColor = System.Drawing.Color.Green
-        Me.btnDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray
+        Me.btnDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Green
+        Me.btnDelete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray
         Me.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnDelete.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnDelete.Location = New System.Drawing.Point(136, 45)
@@ -161,7 +167,8 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnAdd.FlatAppearance.CheckedBackColor = System.Drawing.Color.Green
-        Me.btnAdd.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray
+        Me.btnAdd.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Green
+        Me.btnAdd.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray
         Me.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnAdd.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnAdd.Location = New System.Drawing.Point(15, 45)
@@ -297,10 +304,10 @@ Partial Class Form1
         '
         Me.MenuStrip1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.MenuStrip1.Dock = System.Windows.Forms.DockStyle.None
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmOpen, Me.tsmManual})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmOpen, Me.tsmManual, Me.tsmReport})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(127, 25)
+        Me.MenuStrip1.Size = New System.Drawing.Size(280, 25)
         Me.MenuStrip1.TabIndex = 4
         Me.MenuStrip1.Text = "File"
         '
@@ -329,6 +336,9 @@ Partial Class Form1
         Me.OpenFileDialog1.InitialDirectory = "D:\Documents\Source\Repository\Jukebox\Jukebox\WAVfiles"
         Me.OpenFileDialog1.Title = "Choose Media Files"
         '
+        'TimerPlay
+        '
+        '
         'GroupBox1
         '
         Me.GroupBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -354,6 +364,16 @@ Partial Class Form1
         Me.TrackBarPlay.Size = New System.Drawing.Size(595, 45)
         Me.TrackBarPlay.TabIndex = 7
         Me.TrackBarPlay.TickStyle = System.Windows.Forms.TickStyle.None
+        '
+        'Timer1
+        '
+        '
+        'tsmReport
+        '
+        Me.tsmReport.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.tsmReport.Name = "tsmReport"
+        Me.tsmReport.Size = New System.Drawing.Size(61, 21)
+        Me.tsmReport.Text = "Report"
         '
         'Form1
         '
@@ -413,4 +433,6 @@ Partial Class Form1
     Friend WithEvents tsmManual As ToolStripMenuItem
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents TrackBarPlay As TrackBar
+    Friend WithEvents Timer1 As Timer
+    Friend WithEvents tsmReport As ToolStripMenuItem
 End Class

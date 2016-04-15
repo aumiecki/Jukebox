@@ -40,6 +40,7 @@
                 ListBox1.Items.Add(song)
             Next
         End If
+        Timer1.Start()
     End Sub
 
     Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
@@ -51,15 +52,25 @@
                 ListBox1.Items.Add(song)
             Next
         End If
+        Timer1.Start()
     End Sub
 
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
-        ListBox1.Items.Remove(ListBox1.SelectedItem)
+        Try
+            ListBox1.Items.Remove(ListBox1.SelectedItem)
+            ListBox1.SelectedIndex = "0"
+            ListBox1.ClearSelected()
+        Catch ex As Exception
+            ListBox1.Items.Remove(ListBox1.SelectedItem)
+            ListBox1.SelectedIndex = "-1"
+            ListBox1.ClearSelected()
+        End Try
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
         TimerPlay.Start()
         AxWindowsMediaPlayer.URL = ListBox1.SelectedItem
+        Timer1.Start()
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As EventArgs) Handles btnPrev.Click
@@ -88,7 +99,7 @@
             Loop
         Catch ex As Exception
             writer.Close()
-            ListBox1.SelectedIndex = current
+            ListBox1.ClearSelected()
         End Try
     End Sub
 
@@ -107,5 +118,28 @@
     Private Sub TimerPlay_Tick(sender As Object, e As EventArgs) Handles TimerPlay.Tick
         TrackBarPlay.Maximum = AxWindowsMediaPlayer.currentMedia.duration
         TrackBarPlay.Value = AxWindowsMediaPlayer.Ctlcontrols.currentPosition
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        Try
+            Dim itemNo As Integer
+
+            itemNo = ListBox1.SelectedIndex
+
+            If Me.AxWindowsMediaPlayer.playState = WMPLib.WMPPlayState.wmppsStopped Then
+                Me.ListBox1.SelectedIndex = itemNo + 1
+                AxWindowsMediaPlayer.URL = ListBox1.SelectedItem
+                Timer1.Start()
+            Else
+                Timer1.Start()
+            End If
+        Catch ex As Exception
+            Timer1.Stop()
+        End Try
+    End Sub
+
+    Private Sub tsmReport_Click(sender As Object, e As EventArgs) Handles tsmReport.Click
+        Report.txtReport.Text = My.Computer.FileSystem.ReadAllText(Application.StartupPath & "\playlist.txt")
+        Report.Show()
     End Sub
 End Class
